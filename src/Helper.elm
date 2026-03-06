@@ -3,7 +3,11 @@ module Helper exposing (..)
 import Browser
 import Char
 import Html.Events
+
+
+
 -- 1. Grados
+
 
 type GradeStatus
     = Approved
@@ -55,7 +59,6 @@ airStatus rango =
             "Buscar boleto"
 
 
-
 airplaneScheduleAction : AirplaneStatus -> String
 airplaneScheduleAction status =
     airStatus status
@@ -66,32 +69,40 @@ airportAction airplaneScheduleActions =
     List.map airStatus airplaneScheduleActions
 
 
-type PackageStatus 
+type PackageStatus
     = InWarehouse
     | InTransit
     | Delivered
     | Lost
 
-type alias Paquete = {id : Int, estado : PackageStatus}
 
-statusMessage: PackageStatus -> String
+type alias Paquete =
+    { id : Int, estado : PackageStatus }
+
+
+statusMessage : PackageStatus -> String
 statusMessage estatus =
-    case estatus of 
-    InWarehouse ->
-        "Estamos preparando tu paquete"
-    InTransit ->
-        "El repartidor va en camino"
-    Delivered ->
-        "Disfruta tu compra"
-    Lost -> 
-        "Se perdio"
+    case estatus of
+        InWarehouse ->
+            "Estamos preparando tu paquete"
 
-trackPackages: List PackageStatus -> List String
-trackPackages  paquete =
+        InTransit ->
+            "El repartidor va en camino"
+
+        Delivered ->
+            "Disfruta tu compra"
+
+        Lost ->
+            "Se perdio"
+
+
+trackPackages : List PackageStatus -> List String
+trackPackages paquete =
     List.map statusMessage paquete
 
-getTransitIds: List Paquete -> List Int
+
+getTransitIds : List Paquete -> List Int
 getTransitIds lista =
     lista
-        |> List.filter (\p -> p.estado == InTransit )
-        |> List.map (\p -> p.id )
+        |> List.filter (\p -> p.estado == InTransit)
+        |> List.map (\p -> p.id)
